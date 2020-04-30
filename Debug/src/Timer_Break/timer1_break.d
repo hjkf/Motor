@@ -1,5 +1,5 @@
 src/Timer_Break/timer1_break.o: ../src/Timer_Break/timer1_break.c \
- ../src/Timer_Break/timer1_brak.h ../src/Timer_Break/../sys/sys.h \
+ ../src/Timer_Break/timer1_brak.h e:\my_at32\motor\src\sys\sys.h \
  ../system/include/cmsis/stm32f10x.h ../system/include/cmsis/core_cm3.h \
  ../system/include/cmsis/core_cmInstr.h \
  ../system/include/cmsis/cmsis_gcc.h \
@@ -27,11 +27,12 @@ src/Timer_Break/timer1_break.o: ../src/Timer_Break/timer1_break.c \
  ../system/include/stm32f1-stdperiph/stm32f10x_tim.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_usart.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_wwdg.h \
- ../system/include/stm32f1-stdperiph/misc.h
+ ../system/include/stm32f1-stdperiph/misc.h \
+ e:\my_at32\motor\src\led\led.h e:\my_at32\motor\src\sys\sys.h
 
 ../src/Timer_Break/timer1_brak.h:
 
-../src/Timer_Break/../sys/sys.h:
+e:\my_at32\motor\src\sys\sys.h:
 
 ../system/include/cmsis/stm32f10x.h:
 
@@ -92,3 +93,7 @@ src/Timer_Break/timer1_break.o: ../src/Timer_Break/timer1_break.c \
 ../system/include/stm32f1-stdperiph/stm32f10x_wwdg.h:
 
 ../system/include/stm32f1-stdperiph/misc.h:
+
+e:\my_at32\motor\src\led\led.h:
+
+e:\my_at32\motor\src\sys\sys.h:

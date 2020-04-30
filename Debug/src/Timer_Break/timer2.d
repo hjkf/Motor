@@ -1,12 +1,10 @@
-src/main.o: ../src/main.c ../system/include/diag/Trace.h ../src/Timer.h \
- ../system/include/cmsis/cmsis_device.h \
+src/Timer_Break/timer2.o: ../src/Timer_Break/timer2.c \
  ../system/include/cmsis/stm32f10x.h ../system/include/cmsis/core_cm3.h \
  ../system/include/cmsis/core_cmInstr.h \
  ../system/include/cmsis/cmsis_gcc.h \
  ../system/include/cmsis/core_cmFunc.h \
  ../system/include/cmsis/system_stm32f10x.h ../include/stm32f10x_conf.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_adc.h \
- ../system/include/cmsis/stm32f10x.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_bkp.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_can.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_cec.h \
@@ -28,17 +26,8 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h ../src/Timer.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_tim.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_usart.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_wwdg.h \
- ../system/include/stm32f1-stdperiph/misc.h ../include/BlinkLed.h \
- ../src/sys/sys.h ../src/motor_int/motor_int.h \
- ../src/motor_int/motor_define.h ../src/motor_int/../sys/sys.h \
- ../src/Timer_Break/timer1_brak.h e:\my_at32\motor\src\sys\sys.h \
- ../src/Timer_Break/timer2.h ../src/LED/LED.h ../src/LED/../sys/sys.h
-
-../system/include/diag/Trace.h:
-
-../src/Timer.h:
-
-../system/include/cmsis/cmsis_device.h:
+ ../system/include/stm32f1-stdperiph/misc.h ../src/Timer_Break/timer2.h \
+ e:\my_at32\motor\src\led\led.h e:\my_at32\motor\src\sys\sys.h
 
 ../system/include/cmsis/stm32f10x.h:
 
@@ -55,8 +44,6 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h ../src/Timer.h \
 ../include/stm32f10x_conf.h:
 
 ../system/include/stm32f1-stdperiph/stm32f10x_adc.h:
-
-../system/include/cmsis/stm32f10x.h:
 
 ../system/include/stm32f1-stdperiph/stm32f10x_bkp.h:
 
@@ -102,22 +89,8 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h ../src/Timer.h \
 
 ../system/include/stm32f1-stdperiph/misc.h:
 
-../include/BlinkLed.h:
-
-../src/sys/sys.h:
-
-../src/motor_int/motor_int.h:
-
-../src/motor_int/motor_define.h:
-
-../src/motor_int/../sys/sys.h:
-
-../src/Timer_Break/timer1_brak.h:
-
-e:\my_at32\motor\src\sys\sys.h:
-
 ../src/Timer_Break/timer2.h:
 
-../src/LED/LED.h:
+e:\my_at32\motor\src\led\led.h:
 
-../src/LED/../sys/sys.h:
+e:\my_at32\motor\src\sys\sys.h:

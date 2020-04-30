@@ -4,13 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/Timer_Break/timer1_break.c 
+../src/Timer_Break/timer1_break.c \
+../src/Timer_Break/timer2.c 
 
 OBJS += \
-./src/Timer_Break/timer1_break.o 
+./src/Timer_Break/timer1_break.o \
+./src/Timer_Break/timer2.o 
 
 C_DEPS += \
-./src/Timer_Break/timer1_break.d 
+./src/Timer_Break/timer1_break.d \
+./src/Timer_Break/timer2.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

@@ -8,6 +8,8 @@
 #include "motor_int/motor_int.h"
 #include "motor_int/motor_define.h"
 #include "Timer_Break/timer1_brak.h"
+#include "Timer_Break/timer2.h"
+#include "LED/LED.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -33,33 +35,22 @@ int main(int argc, char* argv[])
 	RCC->APB2ENR |= APB2ENR;
 	RCC->APB1ENR |= APB1ENR;
 
+	GPIOC->CRH&=0X0FFFFFFF;
+	GPIOC->CRH|=0X30000000;//PA10 11 推挽输出
+
 	motor_init();//初始化端口
 	PB12OUT_LOW;//电机使能线拉高
-	TIM1_PWM_Init(49,7200);    // 72M/7200=10khz, 1/10khz * 500=50ms   ⑧8
+	motor_init();
+
+	//TIM1_PWM_Init(49,7200);    // 72M/7200=10khz, 1/10khz * 500=50ms   ⑧8
+	//Timer1_Init(500,7199);
+//	Timer3_Init(5000,7199);
+	PWM3_Init(300,7199);// 72M/7200=10khz, 1/10khz//0.1 * 500=50ms   ⑧8
+
   while (1)
     {
-      TIM1->CCR4=250;  //占空比：50%  低电平时长25ms   ⑨9
-      TIM1->CCR3=100;  //占空比：75%  低电平时长12.5ms
-      TIM1->CCR2=50;     //占空比：90% 低电平时长5ms
-      TIM1->CCR1=25;     //占空比：95% 低电平时长2.5ms
+	  Motor_Run();
     }
-//	motor_init();
-//	PB12OUT_LOW;
-//
-//  while (1)
-//    {
-//	  PA11OUT_HIGH;
-//	  delay_us(500);
-//	  PA10OUT_LOW;
-//	  delay_us(500);
-//
-//	  PA11OUT_LOW;
-//	  delay_us(500);
-//	  PA10OUT_HIGH;
-//	  delay_us(500);
-//
-//    }
-
 }
 
 #pragma GCC diagnostic pop

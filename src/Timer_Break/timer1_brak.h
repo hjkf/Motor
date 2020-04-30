@@ -30,7 +30,7 @@
 #define PWM1_CH3 TIM1->CCR3
 #define PWM1_CH4 TIM1->CCR4
 
-void TIM1_PWM_Init(u16 arr,u16 psc);
-void TIM_Config(void);
+void Timer1_Init(u16 arr,u16 psc);
+void PWM1_Init(u16 arr,u16 psc);
 
 #endif /* TIMER_BREAK_TIMER1_BRAK_H_ */

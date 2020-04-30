@@ -16,6 +16,7 @@ RM := rm -rf
 -include src/sys/subdir.mk
 -include src/motor_int/subdir.mk
 -include src/Timer_Break/subdir.mk
+-include src/LED/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
 -include objects.mk

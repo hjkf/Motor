@@ -73,6 +73,9 @@ void Stm32_Clock_Init(u8 PLL);  // ±÷”≥ı ºªØ
 extern void JTAG_Set(u8 mode);
 extern void NVIC_Configuration(void);
 
+void MY_NVIC_PriorityGroupConfig(u8 NVIC_Group);
+void MY_NVIC_Init(u8 NVIC_PreemptionPriority,u8 NVIC_SubPriority,u8 NVIC_Channel,u8 NVIC_Group);
+
 
 
 #endif /* SYS_SYS_H_ */
