@@ -11,6 +11,6 @@
 
 void Timer3_Init(u16 arr,u16 psc);
 void PWM3_Init(u16 arr,u16 psc);
-void Motor_Run();
+//void ShakeMotor();
 
 #endif /* TIMER_BREAK_TIMER2_H_ */

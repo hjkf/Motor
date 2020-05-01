@@ -7,10 +7,14 @@
 #include "stm32f10x.h"
 #include "timer2.h"
 #include "../LED/LED.h"
+#include "../motor_int/motor_define.h"
+#include "../sys/sys.h"
+#include "../include/IQmath/v160/include/IQmathLib.h"
+#include"../_Global.h"
+#include "../include/math_clocks/v2.1/sin_cos_table.h"
 
-static float Amplitude;
-static u16 flag;
-
+//static float j;
+static bool flag=true;
 
 //CH1与CH2，PA6输出80Khz，占空比91%；PA7输出80Khz，占空比变化的方波
 void PWM3_Init(u16 arr,u16 psc)
@@ -59,6 +63,8 @@ void PWM3_Init(u16 arr,u16 psc)
 
 }
 
+static u8 i;
+
 //void Timer3_Init(u16 arr,u16 psc)
 //{
 //	RCC->APB1ENR|=1<<1;//TIM3时钟使能
@@ -76,28 +82,35 @@ void TIM3_IRQHandler(void)
 {
 	if(TIM3->SR&0X0001)//溢出中断
 	{
-		if(flag==0)
+		i++;
+		//j++;
+		switch(i)
 		{
-			Amplitude=Amplitude+1;
+			case 1:PA11OUT_HIGH;TIM3->CCR3=200;break;
+			case 2:PA10OUT_LOW;TIM3->CCR4=0;break;
+			case 3:PA11OUT_LOW;TIM3->CCR3=0;break;
+			default :i=0;PA10OUT_HIGH;TIM3->CCR4=200;break;
+			//default :
+				//i=0;break;
 		}
-		if(flag==1)
-		{
-			Amplitude=Amplitude-1;
-		}
+//		if(j>=300)
+//		{
+//			j=0;
+//		}
+//		if(flag)
+//		{
+//			TIM3->CCR3=2000;
+//			TIM3->CCR4=0;
+//		}
+//		if(!flag)
+//		{
+//			TIM3->CCR3=0;
+//			TIM3->CCR4=2000;
+//		}
+
+		PC15OUT=!PC15OUT;
+		TIM3->SR&=~(1<<0);//清除中断标志位
 	}
 	TIM3->SR&=~(1<<0);//清除中断标志位
-}
-void Motor_Run()
-{
-	TIM3->CCR3=30+Amplitude;		//调节占空比
-	TIM3->CCR4=100+Amplitude;
-	if((TIM3->CCR4)>=300)
-	{
-		flag=1;
-	}
-	if((TIM3->CCR4)<=90)
-	{
-		flag=0;
-	}
 }
 
