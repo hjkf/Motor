@@ -7,7 +7,7 @@
 
 #include "stm32f10x.h"
 
-void motor_init()
+void motor1_init()
 {
 	GPIOA->CRH&=0XFFFF00FF;
 	GPIOA->CRH|=0X00003300;//PA10 11 ÍÆÍìÊä³ö

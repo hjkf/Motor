@@ -5,8 +5,8 @@
  *      Author: HSD
  */
 
-#ifndef TIMER_BREAK_TIMER1_BRAK_H_
-#define TIMER_BREAK_TIMER1_BRAK_H_
+#ifndef TIMER_TIMER1_H_
+#define TIMER_TIMER1_H_
 #include "../sys/sys.h"
 //////////////////////////////////////////////////////////////////////////////////
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -33,4 +33,4 @@
 void Timer1_Init(u16 arr,u16 psc);
 void PWM1_Init(u16 arr,u16 psc);
 
-#endif /* TIMER_BREAK_TIMER1_BRAK_H_ */
+#endif /* TIMER_TIMER1_H_ */

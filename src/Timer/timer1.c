@@ -4,13 +4,9 @@
  *  Created on: 2020��4��29��
  *      Author: HSD
  */
-#include "timer1_brak.h"
+#include "timer1.h"
 #include "stm32f10x.h"
-#include "stm32f10x_gpio.h"
-#include "stm32f10x_tim.h"
-#include "misc.h"
-#include "stm32f10x_rcc.h"
-#include "../LED/LED.h"
+#include "../_Global.h"
 
 void Timer1_Init(u16 arr,u16 psc)
 {
