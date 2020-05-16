@@ -10,6 +10,6 @@
 
 #include "../sys/sys.h"
 
-void PWM3_Init(u16 psc);
+void PWM3_Init(u16 arr,u16 psc);
 
 #endif /* TIMER_TIMER3_H_ */
