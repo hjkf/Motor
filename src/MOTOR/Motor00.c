@@ -72,33 +72,47 @@ void Motor00_Init()
 
 static void Motor_IRQ()
 {
-	static float i;
-	i+=2;
-	if(i>511)
+	static float speed = 0.05;
+	static float rad = 0;
+	static const float PI2 = 2 * 3.1415926;
+	static const float PI_Inver = 1.0 / 3.1415926 / 2.0;
+	static s32 steps = 0;
+	float acc = 0.0005;
+
+	//speed += acc;
+
+	rad +=speed;
+	if(rad > PI2)
 	{
-		i=0;
+		rad -= PI2;
+		steps +=4;
 	}
-		if(sin((0.703125*i)*( PI/180))*MOTOR_ARR<0)
+
+	float sin = sinf(rad);
+	float cos = cosf(rad);
+	float Iref = 0.00000001;
+
+		if(sin < 0.0f)
 		{
-			TIM1->CCR1 = sin((0.703125*i)*( PI/180))*MOTOR_ARR;
+			TIM1->CCR1 = (1.0f+sin)*MOTOR_ARR*Iref;
 			TIM1->CCR2 = MOTOR_ARR;
 		}
 		else
 		{
 			TIM1->CCR1 =MOTOR_ARR;
-			TIM1->CCR2 = sin((0.703125*i)*( PI/180))*MOTOR_ARR;
+			TIM1->CCR2 = (1.0f-sin)*MOTOR_ARR*Iref;
 
 		}
-		if(cos((0.703125*i)*( PI/180))*MOTOR_ARR<0)
+		if(cos < 0.0f)
 		{
-			TIM1->CCR3 = cos((0.703125*i)*( PI/180))*MOTOR_ARR;
+			TIM1->CCR3 = (1.0f+cos)*MOTOR_ARR*Iref;
 			TIM1->CCR4 = MOTOR_ARR;
 		}
 		else
 		{
 
 			TIM1->CCR3 = MOTOR_ARR;
-			TIM1->CCR4 = cos((0.703125*i)*( PI/180))*MOTOR_ARR;
+			TIM1->CCR4 = (1.0f-cos)*MOTOR_ARR*Iref;
 		}
 
 }
