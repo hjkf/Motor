@@ -7,8 +7,9 @@
 #include "stm32f10x.h"
 #include "Motor00.h"
 #include "math.h"
+#include "../Customer/MotorType/MotorType_All.h"
 
-#define PI 3.14159265358979
+//#define PI 3.14159265358979
 #define MOTOR_ARR 4500	//设定计数器自动重装值，PWM频率 = 72000 / （TIM3->ARR + 1）kHz
 
 //TIM2用于中断
@@ -72,21 +73,49 @@ void Motor00_Init()
 
 static void Motor_IRQ()
 {
-	static float speed = 0.05;
+	static float speed = 0.0000001;
 	static float rad = 0;
 	static const float PI2 = 2 * 3.1415926;
+	static const float PI = 3.1415926;
 	static const float PI_Inver = 1.0 / 3.1415926 / 2.0;
 	static s32 steps = 0;
-	float acc = 0.0005;
+	float acc = 0.000005;
+	static int flag=0;
 
-	//speed += acc;
+	if(flag==0)
+	{
+		speed += acc;
+		if(speed>=0.2)
+		{
+			speed=0.2;
+			acc=0;
+		}
+	}
+	else
+	{
+		speed -= acc;
+		if(speed<=0.00001)
+			flag=0;
+	}
 
 	rad +=speed;
 	if(rad > PI2)
 	{
 		rad -= PI2;
-		steps +=4;
+		steps +=4;	//一个周期4步
 	}
+	else if(rad < -PI)
+	{
+		rad +=PI2;
+		steps -=4;
+	}
+	s32 stepsMicro = steps + 4.0f *(rad *PI_Inver);
+	if(stepsMicro>=2000)
+	{
+		speed=0;
+		acc=0;
+	}
+#if MOTORXY_TYPE == 0 //两相电机
 
 	float sin = sinf(rad);
 	float cos = cosf(rad);
@@ -114,8 +143,38 @@ static void Motor_IRQ()
 			TIM1->CCR3 = MOTOR_ARR;
 			TIM1->CCR4 = (1.0f-cos)*MOTOR_ARR*Iref;
 		}
+#elif MOTORXY_TYPE == 1 //三相电机
+
+		 float Aout,Bout,Cout;
+		 float cosA;
+
+		Aout = sinf(rad);
+		cosA = cosf(rad);
+
+        //公式推导：其中120和240表示角度，a表示Aout所代表的角度，Aout是已知的第一相电流
+        //sin(a) = Aout
+        //Bout = sin(a + 120) = sin(a)cos(120) + cos(a)sin(120) = Aout * cos(120) + cosA * sin(120)
+        //Cout = sin(a + 240) = sin(a)cos(240) + cos(a)sin(240) = Aout * cos(240) + cosA * sin(240)
+
+        Bout = Aout * cosf((2*PI)/3) + cosA * sinf((2*PI)/3);
+        Cout = Aout * cosf((4*PI)/3) + cosA * sinf((4*PI)/3);
+
+        //从-1到1之间，正向偏移到0到1之间
+        Aout *= 0.5;
+        Bout *= 0.5;
+        Cout *= 0.5;
+        Aout += 0.5;
+        Bout += 0.5;
+        Cout += 0.5;
+
+        TIM1->CCR1 = Aout * MOTOR_ARR;
+        TIM1->CCR2 = Bout * MOTOR_ARR;
+        TIM1->CCR3 = Cout * MOTOR_ARR;
+#endif
 
 }
+
+
 void TIM2_IRQHandler()
 {
 	 if(TIM2->SR & 0x1)
